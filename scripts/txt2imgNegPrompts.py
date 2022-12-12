@@ -212,7 +212,7 @@ def main(opt):
             data = f.read().splitlines()
             data = [p for p in data for i in range(opt.repeat)]
             data = list(chunk(data, batch_size))
-        sample_path = os.path.join(outpath, opt.prompt[0:10].strip() + "_" + str(opt.W) + "_" + str(opt.H) + "_NegPrompt")
+    sample_path = os.path.join(outpath, opt.prompt[0:10].strip() + "_" + str(opt.W) + "_" + str(opt.H) + "_NegPrompt")
     os.makedirs(sample_path, exist_ok=True)
     sample_count = 0
     base_count = len(os.listdir(sample_path))
