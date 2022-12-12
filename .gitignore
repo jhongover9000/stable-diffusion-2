@@ -5,7 +5,7 @@
 
 
 # ignore weights
-.ckpt
+#.ckpt
 
 # User-specific files
 *.rsuser
