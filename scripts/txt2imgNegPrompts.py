@@ -202,8 +202,8 @@ class Monitor(Thread):
             self.loadSum += gpu.load
             self.timesCounted += 1.0
             print("Average GPU Util:" + str( self.loadSum/float(self.timesCounted) ))
+            print("Top Usage: " + str(self.topUsage))
             time.sleep(self.delay)
-
     def stop(self):
         self.stopped = True    
 
@@ -269,7 +269,7 @@ def main(opt):
             all_samples = list()
 
             # Instantiate monitor with a 0.1-second delay between updates
-            monitor = Monitor(0.1)
+            # monitor = Monitor(0.1)
             for n in trange(opt.n_iter, desc="Sampling"):
                 for prompts in tqdm(data, desc="data"):
                     uc = None
@@ -328,7 +328,7 @@ def main(opt):
           f" \nEnjoy.")
 
     # stop monitor
-    monitor.stop()
+    # monitor.stop()
 
 if __name__ == "__main__":
     opt = parse_args()

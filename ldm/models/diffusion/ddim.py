@@ -6,6 +6,11 @@ from tqdm import tqdm
 
 from ldm.modules.diffusionmodules.util import make_ddim_sampling_parameters, make_ddim_timesteps, noise_like, extract_into_tensor
 
+# GPU Monitoring
+import GPUtil
+from threading import Thread
+import time
+
 
 class DDIMSampler(object):
     def __init__(self, model, schedule="linear", **kwargs):
@@ -77,6 +82,7 @@ class DDIMSampler(object):
                ucg_schedule=None,
                **kwargs
                ):
+        monitor = Monitor(0.1)
         if conditioning is not None:
             if isinstance(conditioning, dict):
                 ctmp = conditioning[list(conditioning.keys())[0]]
@@ -117,6 +123,8 @@ class DDIMSampler(object):
                                                     dynamic_threshold=dynamic_threshold,
                                                     ucg_schedule=ucg_schedule
                                                     )
+        print(monitor.topUsage)
+        monitor.stop()                                                      
         return samples, intermediates
 
     @torch.no_grad()
@@ -334,3 +342,28 @@ class DDIMSampler(object):
                                           unconditional_conditioning=unconditional_conditioning)
             if callback: callback(i)
         return x_dec
+
+# monitor GPU
+class Monitor(Thread):
+    def __init__(self, delay):
+        super(Monitor, self).__init__()
+        self.stopped = False
+        self.delay = delay # Time between calls to GPUtil
+        self.start()
+        self.loadSum = 0.0
+        self.timesCounted = 0.0
+        self.topUsage = 0.0
+
+    def run(self):
+        while not self.stopped:
+            gpu = GPUtil.getGPUs()[0]
+            # get max load
+            if(gpu.load > self.topUsage):
+                self.topUsage = gpu.load
+            self.loadSum += gpu.load
+            self.timesCounted += 1.0
+            print("Average GPU Util:" + str( self.loadSum/float(self.timesCounted) ))
+            print("Top Usage: " + str(self.topUsage))
+            time.sleep(self.delay)
+    def stop(self):
+        self.stopped = True          
