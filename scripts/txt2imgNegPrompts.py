@@ -189,21 +189,35 @@ class Monitor(Thread):
         self.stopped = False
         self.delay = delay # Time between calls to GPUtil
         self.start()
-        self.loadSum = 0.0
-        self.timesCounted = 0.0
-        self.topUsage = 0.0
 
     def run(self):
         while not self.stopped:
-            gpu = GPUtil.getGPUs()[0]
-            # get max load
-            if(gpu.load > self.topUsage):
-                self.topUsage = gpu.load
-            self.loadSum += gpu.load
-            self.timesCounted += 1.0
+            GPUtil.showUtilization()
             time.sleep(self.delay)
+
     def stop(self):
-        self.stopped = True    
+        self.stopped = True
+    
+    # def __init__(self, delay):
+    #     super(Monitor, self).__init__()
+    #     self.stopped = False
+    #     self.delay = delay # Time between calls to GPUtil
+    #     self.start()
+    #     self.loadSum = 0.0
+    #     self.timesCounted = 0.0
+    #     self.topUsage = 0.0
+
+    # def run(self):
+    #     while not self.stopped:
+    #         gpu = GPUtil.getGPUs()[0]
+    #         # get max load
+    #         if(gpu.load > self.topUsage):
+    #             self.topUsage = gpu.load
+    #         self.loadSum += gpu.load
+    #         self.timesCounted += 1.0
+    #         time.sleep(self.delay)
+    # def stop(self):
+    #     self.stopped = True    
 
 
 def main(opt):
