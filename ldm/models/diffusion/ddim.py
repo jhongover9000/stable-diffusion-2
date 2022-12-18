@@ -154,6 +154,7 @@ class DDIMSampler(object):
         iterator = tqdm(time_range, desc='DDIM Sampler', total=total_steps)
 
         for i, step in enumerate(iterator):
+            GPUtil.showUtilization()
             index = total_steps - i - 1
             ts = torch.full((b,), step, device=device, dtype=torch.long)
 
