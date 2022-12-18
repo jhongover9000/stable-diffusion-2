@@ -280,7 +280,7 @@ def main(opt):
         model.ema_scope():
             all_samples = list()
 
-            # monitor = Monitor(0.1)
+            monitor = Monitor(0.1)
             for n in trange(opt.n_iter, desc="Sampling"):
                 for prompts in tqdm(data, desc="data"):
                     uc = None
@@ -294,7 +294,7 @@ def main(opt):
                     # increment steps, run sampler 10 times
                     for i in range(0,100,10):
                         # Instantiate monitor with a 0.1-second delay between updates
-                        monitor = Monitor(0.1)
+                        # monitor = Monitor(0.01)
                         # set min step to 1
                         if(i != 0):
                             steps = i
@@ -327,10 +327,10 @@ def main(opt):
                         # print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
                         # totalLoad += monitor.loadSum
                         # totalCount += monitor.timesCounted
-                        monitor.stop()
-                    
+                        # monitor.stop()
+                
                     # print("Total AVG Load: " + str(totalLoad/totalCount))
-
+            monitor.stop()
             # # additionally, save as grid
             # grid = torch.stack(all_samples, 0)
             # grid = rearrange(grid, 'n b c h w -> (n b) c h w')
