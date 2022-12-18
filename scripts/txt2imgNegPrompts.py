@@ -312,18 +312,22 @@ def main(opt):
 
                         all_samples.append(x_samples)
                         print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
+                        totalLoad += monitor.loadSum
+                        totalCount += monitor.timesCounted
+                    
+                    print("Total AVG Load: " + str(totalLoad/totalCount))
 
-            # additionally, save as grid
-            grid = torch.stack(all_samples, 0)
-            grid = rearrange(grid, 'n b c h w -> (n b) c h w')
-            grid = make_grid(grid, nrow=n_rows)
+            # # additionally, save as grid
+            # grid = torch.stack(all_samples, 0)
+            # grid = rearrange(grid, 'n b c h w -> (n b) c h w')
+            # grid = make_grid(grid, nrow=n_rows)
 
-            # to image
-            grid = 255. * rearrange(grid, 'c h w -> h w c').cpu().numpy()
-            grid = Image.fromarray(grid.astype(np.uint8))
-            # grid = put_watermark(grid, wm_encoder)
-            grid.save(os.path.join(outpath, f'grid-{grid_count:04}.png'))
-            grid_count += 1
+            # # to image
+            # grid = 255. * rearrange(grid, 'c h w -> h w c').cpu().numpy()
+            # grid = Image.fromarray(grid.astype(np.uint8))
+            # # grid = put_watermark(grid, wm_encoder)
+            # grid.save(os.path.join(outpath, f'grid-{grid_count:04}.png'))
+            # grid_count += 1
 
     print(f"Your samples are ready and waiting for you here: \n{outpath} \n"
           f" \nEnjoy.")
