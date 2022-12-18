@@ -189,14 +189,15 @@ class Monitor(Thread):
         self.stopped = False
         self.delay = delay # Time between calls to GPUtil
         self.start()
-        self.loadSum = 0
-        self.timesCounted = 0
+        self.loadSum = 0.0
+        self.timesCounted = 0.0
 
     def run(self):
         while not self.stopped:
             gpu = GPUtil.getGPUs()[0]
-            loadSum += gpu.load
-            timesCounted += 1
+            self.loadSum += gpu.load
+            self.timesCounted += 1.0
+            print("Average GPU Util:" + str( self.loadSum/float(self.timesCounted) ))
             time.sleep(self.delay)
 
     def stop(self):
@@ -204,7 +205,7 @@ class Monitor(Thread):
 
 
 def main(opt):
-    # Instantiate monitor with a 1-second delay between updates
+    # Instantiate monitor with a 0.1-second delay between updates
     monitor = Monitor(0.1)
 
     #deviceID = GPUtil.getFirstAvailable()
