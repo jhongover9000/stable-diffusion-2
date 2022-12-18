@@ -12,6 +12,31 @@ from threading import Thread
 import time
 
 
+# monitor GPU
+class Monitor(Thread):
+    def __init__(self, delay):
+        super(Monitor, self).__init__()
+        self.stopped = False
+        self.delay = delay # Time between calls to GPUtil
+        self.start()
+        self.loadSum = 0.0
+        self.timesCounted = 0.0
+        self.topUsage = 0.0
+
+    def run(self):
+        while not self.stopped:
+            gpu = GPUtil.getGPUs()[0]
+            # get max load
+            if(gpu.load > self.topUsage):
+                self.topUsage = gpu.load
+            self.loadSum += gpu.load
+            self.timesCounted += 1.0
+            print("Average GPU Util:" + str( self.loadSum/float(self.timesCounted) ))
+            print("Top Usage: " + str(self.topUsage))
+            time.sleep(self.delay)
+    def stop(self):
+        self.stopped = True         
+
 class DDIMSampler(object):
     def __init__(self, model, schedule="linear", **kwargs):
         super().__init__()
@@ -100,7 +125,7 @@ class DDIMSampler(object):
                 if conditioning.shape[0] != batch_size:
                     print(f"Warning: Got {conditioning.shape[0]} conditionings but batch-size is {batch_size}")
 
-        self.make_schedule(ddim_num_steps=S, ddim_eta=eta, verbose=verbose)a
+        self.make_schedule(ddim_num_steps=S, ddim_eta=eta, verbose=verbose)
         # sampling
         C, H, W = shape
         size = (batch_size, C, H, W)
@@ -343,27 +368,4 @@ class DDIMSampler(object):
             if callback: callback(i)
         return x_dec
 
-# monitor GPU
-class Monitor(Thread):
-    def __init__(self, delay):
-        super(Monitor, self).__init__()
-        self.stopped = False
-        self.delay = delay # Time between calls to GPUtil
-        self.start()
-        self.loadSum = 0.0
-        self.timesCounted = 0.0
-        self.topUsage = 0.0
-
-    def run(self):
-        while not self.stopped:
-            gpu = GPUtil.getGPUs()[0]
-            # get max load
-            if(gpu.load > self.topUsage):
-                self.topUsage = gpu.load
-            self.loadSum += gpu.load
-            self.timesCounted += 1.0
-            print("Average GPU Util:" + str( self.loadSum/float(self.timesCounted) ))
-            print("Top Usage: " + str(self.topUsage))
-            time.sleep(self.delay)
-    def stop(self):
-        self.stopped = True          
+ 
