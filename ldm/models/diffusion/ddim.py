@@ -43,6 +43,7 @@ class DDIMSampler(object):
         self.model = model
         self.ddpm_num_timesteps = model.num_timesteps
         self.schedule = schedule
+        self.monitor = Monitor(0.1)
 
     def register_buffer(self, name, attr):
         if type(attr) == torch.Tensor:
@@ -107,7 +108,6 @@ class DDIMSampler(object):
                ucg_schedule=None,
                **kwargs
                ):
-        monitor = Monitor(0.1)
         if conditioning is not None:
             if isinstance(conditioning, dict):
                 ctmp = conditioning[list(conditioning.keys())[0]]
@@ -147,10 +147,11 @@ class DDIMSampler(object):
                                                     unconditional_conditioning=unconditional_conditioning,
                                                     dynamic_threshold=dynamic_threshold,
                                                     ucg_schedule=ucg_schedule
-                                                    )
-        print(monitor.topUsage)
-        monitor.stop()                                                      
+                                                    )                                                   
+        print(self.monitor.topUsage)
+        self.monitor.stop()
         return samples, intermediates
+
 
     @torch.no_grad()
     def ddim_sampling(self, cond, shape,
