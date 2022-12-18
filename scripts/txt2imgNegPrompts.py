@@ -189,10 +189,14 @@ class Monitor(Thread):
         self.stopped = False
         self.delay = delay # Time between calls to GPUtil
         self.start()
+        self.loadSum = 0
+        self.timesCounted = 0
 
     def run(self):
         while not self.stopped:
-            GPUtil.showUtilization()
+            gpu = GPUtil.getGPUs()[0]
+            loadSum += gpu.load
+            timesCounted += 1
             time.sleep(self.delay)
 
     def stop(self):
@@ -201,7 +205,14 @@ class Monitor(Thread):
 
 def main(opt):
     # Instantiate monitor with a 1-second delay between updates
-    monitor = Monitor(1)
+    monitor = Monitor(0.1)
+
+    #deviceID = GPUtil.getFirstAvailable()
+    # using one GPU atm
+    GPUs = GPUtil.getGPUs()
+    gpu = GPUs[0]
+    totalLoad = 0   # total of loads combined
+    totalCount = 0      # times counted
 
     seed_everything(opt.seed)
 
@@ -210,8 +221,7 @@ def main(opt):
 
     device = torch.device("cuda")
     
-    #deviceID = GPUtil.getFirstAvailable()
-    GPUs = GPUtil.getGPUs()
+    
     
     
     model = model.to(device)
@@ -265,9 +275,6 @@ def main(opt):
                     shape = [opt.C, opt.H // opt.f, opt.W // opt.f]
                     
                     # increment steps, run sampler 10 times
-                    # totalSteps = opt.steps
-                    
-
                     for i in range(0,100,10):
                         # set min step to 1
                         if(i != 0):
