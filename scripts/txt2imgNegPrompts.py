@@ -12,8 +12,7 @@ from pytorch_lightning import seed_everything
 from torch import autocast
 from contextlib import nullcontext
 from ldm.util import instantiate_from_config
-import ldm.models.diffusion.ddim
-# from ldm.models.diffusion.ddim import DDIMSampler
+from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 from ldm.models.diffusion.dpm_solver import DPMSolverSampler
 # GPU Monitoring
@@ -269,7 +268,6 @@ def main(opt):
         model.ema_scope():
             all_samples = list()
 
-            # Instantiate monitor with a 0.1-second delay between updates
             # monitor = Monitor(0.1)
             for n in trange(opt.n_iter, desc="Sampling"):
                 for prompts in tqdm(data, desc="data"):
@@ -283,6 +281,8 @@ def main(opt):
                     
                     # increment steps, run sampler 10 times
                     for i in range(0,100,10):
+                        # Instantiate monitor with a 0.1-second delay between updates
+                        monitor = Monitor(0.1)
                         # set min step to 1
                         if(i != 0):
                             steps = i
@@ -311,7 +311,7 @@ def main(opt):
                             sample_count += 1
 
                         all_samples.append(x_samples)
-
+                        print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
 
             # additionally, save as grid
             grid = torch.stack(all_samples, 0)
