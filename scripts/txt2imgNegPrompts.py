@@ -287,6 +287,7 @@ def main(opt):
                         else:
                             steps = 1
                         print("step ",steps)
+                        GPUtil.showUtilization()
                         samples, _ = sampler.sample(S=steps,
                                                      conditioning=c,
                                                      batch_size=opt.n_samples,
