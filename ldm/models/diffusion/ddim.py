@@ -13,7 +13,7 @@ import time
 
 
 # monitor GPU
-class Monitor(object):
+class Monitor(Thread):
     def __init__(self, delay):
         super(Monitor, self).__init__()
         self.stopped = False
