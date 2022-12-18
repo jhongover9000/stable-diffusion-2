@@ -294,7 +294,7 @@ def main(opt):
                     # increment steps, run sampler 10 times
                     for i in range(0,100,10):
                         # Instantiate monitor with a 0.1-second delay between updates
-                        # monitor = Monitor(0.1)
+                        monitor = Monitor(0.1)
                         # set min step to 1
                         if(i != 0):
                             steps = i
@@ -327,6 +327,7 @@ def main(opt):
                         # print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
                         # totalLoad += monitor.loadSum
                         # totalCount += monitor.timesCounted
+                        monitor.stop()
                     
                     # print("Total AVG Load: " + str(totalLoad/totalCount))
 
