@@ -205,8 +205,6 @@ class Monitor(Thread):
 
 
 def main(opt):
-    # Instantiate monitor with a 0.1-second delay between updates
-    monitor = Monitor(0.1)
 
     #deviceID = GPUtil.getFirstAvailable()
     # using one GPU atm
@@ -265,6 +263,9 @@ def main(opt):
         precision_scope("cuda"), \
         model.ema_scope():
             all_samples = list()
+
+            # Instantiate monitor with a 0.1-second delay between updates
+            monitor = Monitor(0.1)
             for n in trange(opt.n_iter, desc="Sampling"):
                 for prompts in tqdm(data, desc="data"):
                     uc = None
