@@ -191,10 +191,14 @@ class Monitor(Thread):
         self.start()
         self.loadSum = 0.0
         self.timesCounted = 0.0
+        self.topUsage = 0.0
 
     def run(self):
         while not self.stopped:
             gpu = GPUtil.getGPUs()[0]
+            # get max load
+            if(gpu.load > self.topUsage):
+                self.topUsage = gpu.load
             self.loadSum += gpu.load
             self.timesCounted += 1.0
             print("Average GPU Util:" + str( self.loadSum/float(self.timesCounted) ))
