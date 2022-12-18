@@ -15,6 +15,10 @@ from ldm.util import instantiate_from_config
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 from ldm.models.diffusion.dpm_solver import DPMSolverSampler
+# GPU Monitoring
+import GPUtil
+from threading import Thread
+import time
 
 torch.set_grad_enabled(False)
 
@@ -179,14 +183,37 @@ def parse_args():
     opt = parser.parse_args()
     return opt
 
+class Monitor(Thread):
+    def __init__(self, delay):
+        super(Monitor, self).__init__()
+        self.stopped = False
+        self.delay = delay # Time between calls to GPUtil
+        self.start()
+
+    def run(self):
+        while not self.stopped:
+            GPUtil.showUtilization()
+            time.sleep(self.delay)
+
+    def stop(self):
+        self.stopped = True    
+
 
 def main(opt):
+    # Instantiate monitor with a 1-second delay between updates
+    monitor = Monitor(1)
+
     seed_everything(opt.seed)
 
     config = OmegaConf.load(f"{opt.config}")
     model = load_model_from_config(config, f"{opt.ckpt}")
 
     device = torch.device("cuda")
+    
+    #deviceID = GPUtil.getFirstAvailable()
+    GPUs = GPUtil.getGPUs()
+    
+    
     model = model.to(device)
 
     if opt.plms:
@@ -239,6 +266,8 @@ def main(opt):
                     
                     # increment steps, run sampler 10 times
                     # totalSteps = opt.steps
+                    
+
                     for i in range(0,100,10):
                         # set min step to 1
                         if(i != 0):
@@ -285,6 +314,8 @@ def main(opt):
     print(f"Your samples are ready and waiting for you here: \n{outpath} \n"
           f" \nEnjoy.")
 
+    # stop monitor
+    monitor.stop()
 
 if __name__ == "__main__":
     opt = parse_args()
