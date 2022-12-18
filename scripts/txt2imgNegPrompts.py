@@ -201,8 +201,6 @@ class Monitor(Thread):
                 self.topUsage = gpu.load
             self.loadSum += gpu.load
             self.timesCounted += 1.0
-            print("Average GPU Util:" + str( self.loadSum/float(self.timesCounted) ))
-            print("Top Usage: " + str(self.topUsage))
             time.sleep(self.delay)
     def stop(self):
         self.stopped = True    
