@@ -259,6 +259,7 @@ def main(opt):
 
 						x_samples = model.decode_first_stage(samples)
 						x_samples = torch.clamp((x_samples + 1.0) / 2.0, min=0.0, max=1.0)
+						print("--- %s seconds ---" % (time.time() - start_time))
 
 						for x_sample in x_samples:
 							x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
@@ -267,7 +268,6 @@ def main(opt):
 							img.save(os.path.join(sample_path, f"{steps}.png"))
 							base_count += 1
 							sample_count += 1
-						print("--- %s seconds ---" % (time.time() - start_time))
 						all_samples.append(x_samples)
 
 
