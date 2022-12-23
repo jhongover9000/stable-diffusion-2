@@ -280,7 +280,7 @@ def main(opt):
         model.ema_scope():
             all_samples = list()
 
-            monitor = Monitor(0.1)
+            # monitor = Monitor(0.1)
             for n in trange(opt.n_iter, desc="Sampling"):
                 for prompts in tqdm(data, desc="data"):
                     uc = None
@@ -301,7 +301,8 @@ def main(opt):
                         else:
                             steps = 1
                         print("step ",steps)
-                        GPUtil.showUtilization()
+                        # GPUtil.showUtilization()
+                        start_time = time.time()
                         samples, _ = sampler.sample(S=steps,
                                                      conditioning=c,
                                                      batch_size=opt.n_samples,
@@ -322,7 +323,7 @@ def main(opt):
                             img.save(os.path.join(sample_path, f"{steps}.png"))
                             base_count += 1
                             sample_count += 1
-
+                        print("--- %s seconds ---" % (time.time() - start_time))
                         all_samples.append(x_samples)
                         # print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
                         # totalLoad += monitor.loadSum
@@ -330,7 +331,7 @@ def main(opt):
                         # monitor.stop()
                 
                     # print("Total AVG Load: " + str(totalLoad/totalCount))
-            monitor.stop()
+            # monitor.stop()
             # # additionally, save as grid
             # grid = torch.stack(all_samples, 0)
             # grid = rearrange(grid, 'n b c h w -> (n b) c h w')

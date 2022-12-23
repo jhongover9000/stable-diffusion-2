@@ -19,6 +19,8 @@ from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
 from ldm.models.diffusion.dpm_solver import DPMSolverSampler
 
+import time
+
 torch.set_grad_enabled(False)
 
 def chunk(it, size):
@@ -244,6 +246,7 @@ def main(opt):
 						else:
 							steps = 1
 						print("step ",steps)
+						start_time = time.time()
 						samples, _ = sampler.sample(S=steps,
 													 conditioning=c,
 													 batch_size=opt.n_samples,
@@ -264,7 +267,7 @@ def main(opt):
 							img.save(os.path.join(sample_path, f"{steps}.png"))
 							base_count += 1
 							sample_count += 1
-
+						print("--- %s seconds ---" % (time.time() - start_time))
 						all_samples.append(x_samples)
 
 
