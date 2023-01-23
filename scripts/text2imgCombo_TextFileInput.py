@@ -345,7 +345,7 @@ def main(opt):
                             writeFile = open(os.path.join(id_path, f"log.txt"), "a")
                             if (steps == 30):
                                 writeFile.write("Steps, Time Taken")
-                            writeFile.write(str(steps), str(time_taken))
+                            writeFile.write(str(steps) + "," + str(time_taken))
                             writeFile.close()
                             
                         # print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
