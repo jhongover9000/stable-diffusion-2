@@ -291,6 +291,7 @@ def main(opt):
     for line in file:
         line = line.replace("\"","").strip().replace("data/","").replace(".c","").split(",")
         promptLine = line[1] + ", " + line[2]
+        ids.append(line[0])
         data.append(promptLine)
 
     precision_scope = autocast if opt.precision == "autocast" else nullcontext
