@@ -280,7 +280,9 @@ def main(opt):
     base_count = len(os.listdir(sample_path))
 
     # keep seed and start code the same
-    start_code = torch.randn([opt.n_samples, opt.C, opt.H // opt.f, opt.W // opt.f], device=device)
+    start_code = None
+    if opt.fixed_code:
+        start_code = torch.randn([opt.n_samples, opt.C, opt.H // opt.f, opt.W // opt.f], device=device)
 
     precision_scope = autocast if opt.precision == "autocast" else nullcontext
     with torch.no_grad(), \
