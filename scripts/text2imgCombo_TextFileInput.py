@@ -291,7 +291,7 @@ def main(opt):
             for line in file:
 
                 # split and remove quotation marks for strings
-                line = line.strip().strip("data/").strip("\"").strip(".c").split(",")
+                line = line.replace("\"","").strip().replace("data/","").replace(".c","").split(",")
                 prompt_id = line[0]
                 prompt = line[1] + ", " + line[2]          # combine prompts
                 print(prompt)
@@ -345,8 +345,8 @@ def main(opt):
                             # put time taken for generating file into log file
                             writeFile = open(os.path.join(id_path, f"log.txt"), "a")
                             if (steps == 30):
-                                writeFile.write("Steps, Time Taken")
-                            writeFile.write(str(steps) + "," + str(time_taken))
+                                writeFile.writelines("Steps, Time Taken")
+                            writeFile.writelines(str(steps) + "," + str(time_taken))
                             writeFile.close()
                             
                         # print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
