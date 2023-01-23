@@ -263,17 +263,6 @@ def main(opt):
 
     batch_size = opt.n_samples
     n_rows = opt.n_rows if opt.n_rows > 0 else batch_size
-    if not opt.from_file:
-        prompt = opt.prompt
-        assert prompt is not None
-        data = [batch_size * [prompt]]
-
-    else:
-        print(f"reading prompts from {opt.from_file}")
-        with open(opt.from_file, "r") as f:
-            data = f.read().splitlines()
-            data = [p for p in data for i in range(opt.repeat)]
-            data = list(chunk(data, batch_size))
 
     sample_path = os.path.join(outpath, "web-diffusion-images")
     os.makedirs(sample_path, exist_ok=True)
@@ -299,15 +288,12 @@ def main(opt):
         precision_scope("cuda"), \
         model.ema_scope():
 
-            
+            counter = 0
 
             for n in trange(opt.n_iter, desc="Sampling"):
                     
                 # start monitor (GPU track)
                 # monitor = Monitor(0.1)
-
-                counter = 0
-
                 for prompts in tqdm(data, desc="data"):
 
                     prompt_id = ids[counter]
@@ -322,7 +308,7 @@ def main(opt):
                         uc = model.get_learned_conditioning(opt.neg_prompt)
                     if isinstance(prompts, tuple):
                         prompts = list(prompts)
-                        print("Prompts: " + prompts)
+                    print("Prompts: " + prompts)
                     c = model.get_learned_conditioning(prompts)
                     shape = [opt.C, opt.H // opt.f, opt.W // opt.f]
 
