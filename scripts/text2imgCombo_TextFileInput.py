@@ -289,23 +289,25 @@ def main(opt):
         precision_scope("cuda"), \
         model.ema_scope():
 
-            # iterate through each prompt line
-            for line in file:
+            
 
-                # split and remove quotation marks for strings
-                line = line.replace("\"","").strip().replace("data/","").replace(".c","").split(",")
-                prompt_id = line[0]
-                prompt = line[1] + ", " + line[2]          # combine prompts
-                print(prompt)
+            for n in trange(opt.n_iter, desc="Sampling"):
 
-                # set ID path for image set
-                id_path = os.path.join(sample_path, prompt_id)
-                os.makedirs(id_path, exist_ok=True)
-                
-                # start monitor (GPU track)
-                # monitor = Monitor(0.1)
+                    # iterate through each prompt line
+                for line in file:
 
-                for n in trange(opt.n_iter, desc="Sampling"):
+                    # split and remove quotation marks for strings
+                    line = line.replace("\"","").strip().replace("data/","").replace(".c","").split(",")
+                    prompt_id = line[0]
+                    prompt = line[1] + ", " + line[2]          # combine prompts
+                    print(prompt)
+
+                    # set ID path for image set
+                    id_path = os.path.join(sample_path, prompt_id)
+                    os.makedirs(id_path, exist_ok=True)
+                    
+                    # start monitor (GPU track)
+                    # monitor = Monitor(0.1)
 
                     for prompts in tqdm(data, desc="data"):
                         uc = None
