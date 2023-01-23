@@ -293,7 +293,8 @@ def main(opt):
                 # split and remove quotation marks for strings
                 line = line.strip().strip("data/").strip("\"").strip(".c").split(",")
                 prompt_id = line[0]
-                prompt = line[1] + line[2]          # combine prompts
+                prompt = line[1] + ", " + line[2]          # combine prompts
+                print(prompt)
 
                 # set ID path for image set
                 id_path = os.path.join(sample_path, prompt_id)
