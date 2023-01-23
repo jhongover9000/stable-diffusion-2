@@ -313,7 +313,7 @@ def main(opt):
                             uc = model.get_learned_conditioning(opt.neg_prompt)
                         if isinstance(prompts, tuple):
                             prompts = list(prompts)
-                            print(prompts)
+                            print("Prompts: " + prompts)
                         c = model.get_learned_conditioning(prompts)
                         shape = [opt.C, opt.H // opt.f, opt.W // opt.f]
 
