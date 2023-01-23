@@ -287,6 +287,7 @@ def main(opt):
     
 
     data = []
+    ids = []
     for line in file:
         line = line.replace("\"","").strip().replace("data/","").replace(".c","").split(",")
         promptLine = line[1] + ", " + line[2]
@@ -308,7 +309,7 @@ def main(opt):
 
                 for prompts in tqdm(data, desc="data"):
 
-                    prompt_id = counter
+                    prompt_id = ids[counter]
                     counter += 1
 
                     # set ID path for image set
