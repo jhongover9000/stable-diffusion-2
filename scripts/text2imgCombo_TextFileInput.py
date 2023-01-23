@@ -54,6 +54,12 @@ def load_model_from_config(config, ckpt, verbose=False):
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "--csv",
+        type=str,
+        nargs="?",
+        help="the prompt to render"
+    )
+    parser.add_argument(
         "--prompt",
         type=str,
         nargs="?",
@@ -234,7 +240,7 @@ def main(opt):
     totalCount = 0      # times counted
 
     # Text File Input
-    file = open(sys.argv[1], "r")
+    file = open(opt.csv, "r")
 
     seed_everything(opt.seed)
 
