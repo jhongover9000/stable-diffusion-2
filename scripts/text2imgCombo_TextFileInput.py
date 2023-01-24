@@ -264,7 +264,8 @@ def main(opt):
     batch_size = opt.n_samples
     n_rows = opt.n_rows if opt.n_rows > 0 else batch_size
 
-    sample_path = os.path.join(outpath, "web-diffusion-images")
+    sample_path = os.path.join(outpath, "web-diffusion-images_" + str(opt.seed))
+    print(sample_path)
     os.makedirs(sample_path, exist_ok=True)
     sample_count = 0
     base_count = len(os.listdir(sample_path))
