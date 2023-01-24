@@ -71,7 +71,7 @@ def parse_args():
         type=str,
         nargs="?",
         help="dir to write results to",
-        default="outputs/txt2img-samples"
+        default="/scratch/jhh508/web-diffusion/"
     )
     parser.add_argument(
         "--steps",
