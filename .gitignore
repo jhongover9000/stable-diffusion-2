@@ -5,7 +5,7 @@
 
 
 # ignore bash script
-*.sh
+# *.sh
 
 # ignore weights
 *.ckpt
