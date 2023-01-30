@@ -74,6 +74,13 @@ def parse_args():
         default="/scratch/jhh508/web-diffusion/"
     )
     parser.add_argument(
+        "--negFile",
+        type=str,
+        nargs="?",
+        help="dir to negative prompt",
+        default="/scratch/jhh508/stable-diffusion-2/negPrompt.txt"
+    )
+    parser.add_argument(
         "--steps",
         type=int,
         default=50,
@@ -238,6 +245,10 @@ def main(opt):
     gpu = GPUs[0]
     totalLoad = 0   # total of loads combined
     totalCount = 0      # times counted
+
+    negFile = open(opt.neg, "r")
+    opt.neg_prompt = negFile.readline()
+    negFile.close()
 
     # Text File Input
     file = open(opt.csv, "r")
