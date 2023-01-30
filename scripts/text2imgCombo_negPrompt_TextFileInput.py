@@ -26,6 +26,9 @@ import time
 
 torch.set_grad_enabled(False)
 
+# directory of negative prompt
+neg_dir = "/scratch/jhh508/stable-diffusion-2/negPrompt.txt"
+
 def chunk(it, size):
     it = iter(it)
     return iter(lambda: tuple(islice(it, size)), ())
@@ -75,10 +78,8 @@ def parse_args():
     )
     parser.add_argument(
         "--negFile",
-        type=str,
-        nargs="?",
+        action='store_true',
         help="dir to negative prompt",
-        default="/scratch/jhh508/stable-diffusion-2/negPrompt.txt"
     )
     parser.add_argument(
         "--steps",
@@ -246,9 +247,10 @@ def main(opt):
     totalLoad = 0   # total of loads combined
     totalCount = 0      # times counted
 
-    negFile = open(opt.neg, "r")
-    opt.neg_prompt = negFile.readline()
-    negFile.close()
+    if(opt.negFile):
+        neg_file = open(neg_dir, "r")
+        opt.neg_prompt = neg_file.readline()
+        neg_file.close()
 
     # Text File Input
     file = open(opt.csv, "r")
