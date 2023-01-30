@@ -31,6 +31,12 @@ conda activate stable-diff
 
 module load gcc
 
+python scripts/text2imgCombo_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 768-v-ema.ckpt --fixed_code --seed 979779
+
+python scripts/text2imgCombo_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 768-v-ema.ckpt --fixed_code --seed 1412412
+
+python scripts/text2imgCombo_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 768-v-ema.ckpt --fixed_code --seed 89313
+
 python scripts/text2imgCombo_negPrompt_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 768-v-ema.ckpt --fixed_code --seed 979779 --negFile
 
 python scripts/text2imgCombo_negPrompt_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 768-v-ema.ckpt --fixed_code --seed 1412412 --negFile
