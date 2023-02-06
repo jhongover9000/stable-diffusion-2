@@ -38,14 +38,14 @@ for subdir, dirs, files in os.walk(mainDir):
                 print(line)
                 timeVal = float(line[1])
                 if i == 0:
-                    sum_30 += int(line[1])
+                    sum_30 += timeVal
                     if(timeVal < min_30):
                         min_30 = timeVal
                     if(timeVal > max_30):
                         min_30 = timeVal
                     count_30 += 1
                 elif i == 1:
-                    sum_50 += int(line[1])
+                    sum_50 += timeVal
                     if(timeVal < min_50):
                         min_50 = timeVal
                     if(timeVal > max_50):
@@ -53,7 +53,7 @@ for subdir, dirs, files in os.walk(mainDir):
                     count_50 +=1
 
                 elif i == 2:
-                    sum_70 += int(line[1])
+                    sum_70 += timeVal
                     if(timeVal < min_70):
                         min_70 = timeVal
                     if(timeVal > max_70):
