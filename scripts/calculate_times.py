@@ -3,7 +3,7 @@ import sys, time
 import csv
 import subprocess
 
-mainDir = sys.argv[2]
+mainDir = sys.argv[1]
 
 # Values for 30 steps
 sum_30 = 0.0
