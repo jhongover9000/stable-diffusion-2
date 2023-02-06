@@ -65,11 +65,11 @@ for subdir, dirs, files in os.walk(mainDir):
                     if(timeVal > max_70):
                         min_70 = timeVal
                     count_70 += 1
-                readFile.close()
+                
                 print("Min 30: " + str(min_30) + "  Max 30: " + str(max_30) + " Total 30: " + str(sum_30) + " for " + str(count_30) + "images"+ "\n")
                 print("Min 50: " + str(min_50) + "  Max 50: " + str(max_50) + " Total 50: " + str(sum_50) + " for " + str(count_50) + "images"+  "\n")
                 print("Min 70: " + str(min_70) + "  Max 70: " + str(max_70) + " Total 70: " + str(sum_70) + " for " + str(count_70) + "images"+  "\n")
-
+            readFile.close()
 
 print("Done." + "\n")
 print("Min 30: " + str(min_30) + "  Max 30: " + str(max_30) + " Avg 30: " + str(sum_30/count_30) + "\n")
