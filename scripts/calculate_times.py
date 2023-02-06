@@ -28,6 +28,7 @@ def scrapeData(file):
     readFile = open(os.path.join(subdir, file), "r")
     # skip prompt
     readFile.readline()
+    readFile.readline()
     for i in range(3):
         line = readFile.readline()
         line = line.split()
