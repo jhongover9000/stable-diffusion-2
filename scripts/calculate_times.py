@@ -59,9 +59,9 @@ for subdir, dirs, files in os.walk(mainDir):
                     if(timeVal > max_70):
                         min_70 = timeVal
                     count_70 += 1
-                print("Min 30: " + str(min_30) + "  Max 30: " + str(max_30) + " Avg 30: " + str(sum_30/count_30) + "\n")
-                print("Min 50: " + str(min_50) + "  Max 50: " + str(max_50) + " Avg 50: " + str(sum_50/count_50) + "\n")
-                print("Min 70: " + str(min_70) + "  Max 70: " + str(max_70) + " Avg 70: " + str(sum_70/count_70) + "\n")
+                print("Min 30: " + str(min_30) + "  Max 30: " + str(max_30) + " Total 30: " + str(sum_30) + "\n")
+                print("Min 50: " + str(min_50) + "  Max 50: " + str(max_50) + " Total 50: " + str(sum_50) + "\n")
+                print("Min 70: " + str(min_70) + "  Max 70: " + str(max_70) + " Total 70: " + str(sum_70) + "\n")
 
 
 print("Done." + "\n")
