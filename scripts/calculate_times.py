@@ -34,7 +34,7 @@ for subdir, dirs, files in os.walk(mainDir):
             readFile.readline()
             for i in range(3):
                 line = readFile.readline()
-                line = line.split(",")
+                line = line.strip().split(",")
                 print(line)
                 timeVal = float(line[1])
                 if i == 0:
