@@ -31,7 +31,7 @@ def scrapeData(file):
     readFile.readline()
     for i in range(3):
         line = readFile.readline()
-        line = line.split()
+        line = line.split(",")
         print(line)
         timeVal = float(line[1])
         if i == 0:
