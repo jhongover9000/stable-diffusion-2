@@ -28,7 +28,7 @@ count_70 = 0
 for subdir, dirs, files in os.walk(mainDir):
     for file in files:
         if str(file) == "log.txt":
-            print(file)
+            print(os.path.join(subdir, file))
             readFile = open(os.path.join(subdir, file), "r")
             # skip prompt
             readFile.readline()
@@ -67,13 +67,11 @@ for subdir, dirs, files in os.walk(mainDir):
                         max_70 = timeVal
                     count_70 += 1
                 
-                # print("Min 30: " + str(min_30) + "  Max 30: " + str(max_30) + " Total 30: " + str(sum_30) + " for " + str(count_30) + "images"+ "\n")
-                # print("Min 50: " + str(min_50) + "  Max 50: " + str(max_50) + " Total 50: " + str(sum_50) + " for " + str(count_50) + "images"+  "\n")
-                # print("Min 70: " + str(min_70) + "  Max 70: " + str(max_70) + " Total 70: " + str(sum_70) + " for " + str(count_70) + "images"+  "\n")
+
             readFile.close()
 
 print("Done." + "\n")
-print("Min 30: " + str(min_30) + "  Max 30: " + str(max_30) + " Avg 30: " + str(sum_30/count_30) + "\n")
-print("Min 50: " + str(min_50) + "  Max 50: " + str(max_50) + " Avg 50: " + str(sum_50/count_50) + "\n")
-print("Min 70: " + str(min_70) + "  Max 70: " + str(max_70) + " Avg 70: " + str(sum_70/count_70) + "\n")
+print("Min 30: " + str(min_30) + "  Max 30: " + str(max_30) + " Total 30: " + str(sum_30) + " for " + str(count_30) + "images"+ "\n")
+print("Min 50: " + str(min_50) + "  Max 50: " + str(max_50) + " Total 50: " + str(sum_50) + " for " + str(count_50) + "images"+  "\n")
+print("Min 70: " + str(min_70) + "  Max 70: " + str(max_70) + " Total 70: " + str(sum_70) + " for " + str(count_70) + "images"+  "\n")
 
