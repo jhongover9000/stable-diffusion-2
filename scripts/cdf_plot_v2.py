@@ -24,7 +24,7 @@ except:
 def calculate_standard_deviation(data):
     return statistics.stdev(data)
 
-inputFile = open(inputName, 'r')
+inputFile = open(os.path.join(outdir,inputName), 'r')
 
 for line in inputFile:
     line = line.strip().split(",")
