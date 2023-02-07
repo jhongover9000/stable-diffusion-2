@@ -32,9 +32,9 @@ data70_cdf = np.sort(data70)
 # data50_sd = calculate_standard_deviation(data50)
 # data70_sd = calculate_standard_deviation(data70)
 p = 1. * np.arange(len(data30)) / (len(data30) - 1)
-# print(data30_cdf)
+print(data30_cdf)
 
-plt.plot(data30_cdf, p, 'ro--', label = f'CDF of Inference Time at 50 Steps')
+plt.plot(data30_cdf, p, 'r-', label = f'CDF of Inference Time at 50 Steps')
 plt.plot(data50_cdf, p, 'g+', label = f'CDF of Inference Time at 50 Steps')
 plt.plot(data70_cdf, p, 'bo', label = f'CDF of Inference Time at 70 Steps')
 
@@ -47,7 +47,7 @@ plt.title(title)
 # Show legend and plot
 plt.legend()
 plt.show()
-plt.savefig("/scratch/jhh508/time-calculations/plot.png")
+plt.savefig("/scratch/jhh508/time-calculations/plot_new.png")
 print("done.")
 
 
