@@ -42,8 +42,8 @@ df['x2'] = data50_cdf
 df['x3'] = data70_cdf
 
 plt.plot(df['x1'], p, 'r-', label = f'CDF of Inference Time at 50 Steps')
-plt.plot(df['x2'], p, 'g+', label = f'CDF of Inference Time at 50 Steps')
-plt.plot(df['x3'], p, 'bo', label = f'CDF of Inference Time at 70 Steps')
+# plt.plot(df['x2'], p, 'g+', label = f'CDF of Inference Time at 50 Steps')
+# plt.plot(df['x3'], p, 'bo', label = f'CDF of Inference Time at 70 Steps')
 
 fig = plt.figure()
 
