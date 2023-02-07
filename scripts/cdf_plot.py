@@ -32,6 +32,7 @@ data70_cdf = np.sort(data70)
 # data50_sd = calculate_standard_deviation(data50)
 # data70_sd = calculate_standard_deviation(data70)
 p = 1. * np.arange(len(data30)) / (len(data30) - 1)
+print(p)
 
 plt.plot(data30_cdf, p, 'ro', label = f'CDF of Inference Time at 30 Steps')
 plt.plot(data50_cdf, p, 'go', label = f'CDF of Inference Time at 50 Steps')
