@@ -54,7 +54,7 @@ for col in df.columns:
   xh, xb = np.histogram(df[col], bins=60, normed=True)
 
   # COMPUTE THE CUMULATIVE SUM WITH accumulate
-  xh = 1.0 * np.arange(len(data30)) / (len(data30) - 1)
+  xh = list(accumulate(xh))
   # NORMALIZE THE RESULT
   xh = np.array(xh) / max(xh)
 
