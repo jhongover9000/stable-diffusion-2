@@ -18,6 +18,7 @@ inputName = sys.argv[2]
 # "out"
 try:
     opt = sys.argv[3]
+    print(opt)
 except:
     opt = ""
 
