@@ -53,7 +53,7 @@ for subdir, dirs, files in os.walk(mainDir):
                     try:
                         timeVal = float(line[1])
                     except:
-                        print("error on " + file)
+                        print("error on " + os.path.join(subdir, file))
                         print(line)
                         continue
 
