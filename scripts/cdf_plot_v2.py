@@ -14,7 +14,7 @@ data50 = []
 data70 = []
 
 outdir = sys.argv[1]
-file = sys.argv[2]
+inputName = sys.argv[2]
 # "out"
 try:
     opt = sys.argv[3]
