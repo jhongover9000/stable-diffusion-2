@@ -46,7 +46,7 @@ plt.title(title)
 # Show legend and plot
 plt.legend()
 plt.show()
-plt.savefig("plot.png")
+plt.savefig("/scratch/jhh508/time-calculations/plot.png")
 print("done.")
 
 
