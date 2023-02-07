@@ -122,7 +122,7 @@ for subdir, dirs, files in os.walk(mainDir):
                 
                 readFile.close()
 
-base_count = os.listdir(outdir)
+base_count = len(os.listdir(outdir))
 outputFile = open(os.path.join(outdir,outputName) + str(base_count), 'w')
 for i in range(len(step30list)):
     try:
