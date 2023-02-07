@@ -5,6 +5,7 @@ import statistics
 import argparse, os
 import sys, time
 import csv
+import pandas as pd
 import subprocess
 
 data30 = []
@@ -34,9 +35,15 @@ data70_cdf = np.sort(data70)
 p = 1. * np.arange(len(data30)) / (len(data30) - 1)
 print(data30_cdf)
 
-plt.plot(data30_cdf, p, 'r-', label = f'CDF of Inference Time at 50 Steps')
-plt.plot(data50_cdf, p, 'g+', label = f'CDF of Inference Time at 50 Steps')
-plt.plot(data70_cdf, p, 'bo', label = f'CDF of Inference Time at 70 Steps')
+# GENERATE EXAMPLE DATA
+df = pd.DataFrame()
+df['x1'] = data30_cdf
+df['x2'] = data50_cdf
+df['x3'] = data70_cdf
+
+plt.plot(df['x1'], p, 'r-', label = f'CDF of Inference Time at 50 Steps')
+plt.plot(df['x2'], p, 'g+', label = f'CDF of Inference Time at 50 Steps')
+plt.plot(df['x3'], p, 'bo', label = f'CDF of Inference Time at 70 Steps')
 
 fig = plt.figure()
 
