@@ -13,10 +13,11 @@ data30 = []
 data50 = []
 data70 = []
 
-inputName = sys.argv[1]
+outdir = sys.argv[1]
+file = sys.argv[2]
 # "out"
 try:
-    opt = sys.argv[2]
+    opt = sys.argv[3]
 except:
     opt = ""
 
@@ -61,7 +62,7 @@ for col in df.columns:
   # PLOT WITH LABEL
   ax.plot(xb[1:], xh, label=f"{col}")
 ax.legend()
-plt.title("CDFs of SD v2.0 Inference Times Taken With" + " Neg Prompts")
+plt.title("CDFs of SD v2.0 Inference Times Taken With" + opt + " Neg Prompts")
 plt.show()
-plt.savefig("/scratch/jhh508/time-calculations/plot_new.png")
+plt.savefig("/scratch/jhh508/time-calculations/plot_new" + str(len(os.listdir(outdir))) +".png")
 print("done.")
