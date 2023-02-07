@@ -59,3 +59,5 @@ for col in df.columns:
 ax.legend()
 plt.title("CDFs of Columns")
 plt.show()
+plt.savefig("/scratch/jhh508/time-calculations/plot_new.png")
+print("done.")
