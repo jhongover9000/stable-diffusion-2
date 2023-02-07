@@ -44,8 +44,8 @@ plt.ylabel('CDF')
 plt.title(title)
 
 # Show legend and plot
-# plt.legend()
-# plt.show()
+plt.legend()
+plt.show()
 plt.savefig("plot.png")
 print("done.")
 
