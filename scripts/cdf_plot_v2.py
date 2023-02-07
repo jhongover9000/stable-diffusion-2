@@ -14,7 +14,11 @@ data50 = []
 data70 = []
 
 inputName = sys.argv[1]
-title = sys.argv[2]
+# "out"
+try:
+    opt = sys.argv[2]
+except:
+    opt = ""
 
 def calculate_standard_deviation(data):
     return statistics.stdev(data)
@@ -57,7 +61,7 @@ for col in df.columns:
   # PLOT WITH LABEL
   ax.plot(xb[1:], xh, label=f"$CDF$({col})")
 ax.legend()
-plt.title("CDFs of Columns")
+plt.title("CDFs of SD v2.0 Inference Times Taken With" + " Neg Prompts")
 plt.show()
 plt.savefig("/scratch/jhh508/time-calculations/plot_new.png")
 print("done.")
