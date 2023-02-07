@@ -64,7 +64,7 @@ for subdir, dirs, files in os.walk(mainDir):
                         if(timeVal > max_30):
                             max_30 = timeVal
                         count_30 += 1
-                        step30list.append[timeVal]
+                        step30list.append(timeVal)
                     elif i == 1:
                         sum_50 += timeVal
                         if(timeVal < min_50):
@@ -72,7 +72,7 @@ for subdir, dirs, files in os.walk(mainDir):
                         if(timeVal > max_50):
                             max_50 = timeVal
                         count_50 +=1
-                        step50list.append[timeVal]
+                        step50list.append(timeVal)
 
                     elif i == 2:
                         sum_70 += timeVal
@@ -81,7 +81,7 @@ for subdir, dirs, files in os.walk(mainDir):
                         if(timeVal > max_70):
                             max_70 = timeVal
                         count_70 += 1
-                        step70list.append[timeVal]
+                        step70list.append(timeVal)
 
                 readFile.close()
             else:
