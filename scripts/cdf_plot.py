@@ -34,8 +34,8 @@ data70_cdf = np.sort(data70)
 p = 1. * np.arange(len(data30)) / (len(data30) - 1)
 # print(data30_cdf)
 
-plt.plot(data30_cdf, p, 'ro-', label = f'CDF of Inference Time at 50 Steps')
-plt.plot(data50_cdf, p, 'go+', label = f'CDF of Inference Time at 50 Steps')
+plt.plot(data30_cdf, p, 'ro--', label = f'CDF of Inference Time at 50 Steps')
+plt.plot(data50_cdf, p, 'g+', label = f'CDF of Inference Time at 50 Steps')
 plt.plot(data70_cdf, p, 'bo', label = f'CDF of Inference Time at 70 Steps')
 
 fig = plt.figure()
