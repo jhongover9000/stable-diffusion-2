@@ -37,9 +37,9 @@ data70_cdf = np.sort(data70)
 
 # GENERATE EXAMPLE DATA
 df = pd.DataFrame()
-df['x1'] = data30_cdf
-df['x2'] = data50_cdf
-df['x3'] = data70_cdf
+df['30 Steps'] = data30_cdf
+df['50 Steps'] = data50_cdf
+df['70 Steps'] = data70_cdf
 
 # START A PLOT
 fig,ax = plt.subplots()
@@ -54,12 +54,12 @@ for col in df.columns:
   xh, xb = np.histogram(df[col], bins=60, normed=True)
 
   # COMPUTE THE CUMULATIVE SUM WITH accumulate
-  xh = list(accumulate(xh))
+  xh = 1.0 * np.arange(len(data30)) / (len(data30) - 1)
   # NORMALIZE THE RESULT
   xh = np.array(xh) / max(xh)
 
   # PLOT WITH LABEL
-  ax.plot(xb[1:], xh, label=f"$CDF$({col})")
+  ax.plot(xb[1:], xh, label=f"{col}")
 ax.legend()
 plt.title("CDFs of SD v2.0 Inference Times Taken With" + " Neg Prompts")
 plt.show()
