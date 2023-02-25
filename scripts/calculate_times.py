@@ -1,13 +1,15 @@
+# ex: python scripts/calculate_times.py /scratch/jhh508/ timecalc_neg 1 /scratch/jhh508/web-diffusion-neg/
+
 import argparse, os
 import sys, time
 import csv
 import subprocess
 
-mainDir = sys.argv[1]
+mainDir = sys.argv[3]
 # 1 for new format, 0 for old
 dirType = sys.argv[2]
 # output text name
-outputName = sys.argv[3]
+outputName = sys.argv[1]
 
 # Values for 30 steps
 sum_30 = 0.0
