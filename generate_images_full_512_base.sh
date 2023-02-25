@@ -31,14 +31,14 @@ conda activate stable-diff
 
 module load gcc
 
-python scripts/text2imgCombo_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 979779
+python scripts/text2imgCombo_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 979779
 
-python scripts/text2imgCombo_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 1412412
+python scripts/text2imgCombo_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 1412412
 
-python scripts/text2imgCombo_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 89313
+python scripts/text2imgCombo_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 89313
 
-python scripts/text2imgCombo_negPrompt_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 979779 --negFile
+python scripts/text2imgCombo_negPrompt_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 979779 --negFile
 
-python scripts/text2imgCombo_negPrompt_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 1412412 --negFile
+python scripts/text2imgCombo_negPrompt_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 1412412 --negFile
 
-python scripts/text2imgCombo_negPrompt_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference-v.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 89313 --negFile
+python scripts/text2imgCombo_negPrompt_TextFileInput.py --csv webDiffusion.csv --config configs/stable-diffusion/v2-inference.yaml --ckpt 512-base-ema.ckpt --fixed_code --seed 89313 --negFile
