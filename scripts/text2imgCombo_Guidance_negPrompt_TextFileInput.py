@@ -33,10 +33,8 @@ neg_dir = "/scratch/jhh508/stable-diffusion-2/negPrompt.txt"
 # generate random seeds (5)
 seeds = []
 for i in range(5):
-    tempNum = random()%10000
+    tempNum = random.randint(0,1000000)
     seeds.append(tempNum)
-print(seeds)
-print("\n")
 # steps
 steps = [10, 20, 30, 50, 70]
 # guidance scales
