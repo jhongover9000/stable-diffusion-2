@@ -26,6 +26,7 @@ import time
 import random
 
 torch.set_grad_enabled(False)
+random.seed(None)
 
 # MAIN VARIABLES
 # directory of negative prompt
