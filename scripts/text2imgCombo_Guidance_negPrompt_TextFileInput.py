@@ -31,11 +31,13 @@ random.seed(None)
 # MAIN VARIABLES
 # directory of negative prompt
 neg_dir = "/scratch/jhh508/stable-diffusion-2/negPrompt.txt"
-# generate random seeds (5)
-seeds = []
-for i in range(5):
-    tempNum = random.randint(0,1000000)
-    seeds.append(tempNum)
+# generate fixed random seeds (5)
+# seeds = []
+# for i in range(5):
+#     tempNum = random.randint(0,1000000)
+#     seeds.append(tempNum)
+# generate random seeds every time
+num_seeds = 5
 # steps
 steps = [10, 20, 30, 50, 70]
 # guidance scales
@@ -313,8 +315,11 @@ def main(opt):
         precision_scope("cuda"), \
         model.ema_scope():
 
-            # iterate through seeds
-            for seed in seeds:
+            # iterate through num of images to be produced
+            for i in range(num_seeds):
+
+                # set seed each prompt (x seeds per prompt)
+                seed = random.randint(0,1000000)
                 
                 # set sample folder path
                 sample_path = os.path.join(outpath, "web-diffusion-images_" + str(seed) + "_" + str(opt.W))
@@ -331,6 +336,7 @@ def main(opt):
                     # start monitor (GPU track)
                     # monitor = Monitor(0.1)
                     for prompts in tqdm(data, desc="data"):
+
 
                         prompt_id = ids[counter]
                         counter += 1
@@ -349,7 +355,8 @@ def main(opt):
                         shape = [opt.C, opt.H // opt.f, opt.W // opt.f]
                         # iterate through guidance scales
                         for g_scale in scales:
-                        # increment steps, run sampler steps 30, 50, 70
+
+                            # increment steps, run sampler steps 30, 50, 70
                             for step in steps:
                                 print("step ",step)
                                 # GPUtil.showUtilization()
