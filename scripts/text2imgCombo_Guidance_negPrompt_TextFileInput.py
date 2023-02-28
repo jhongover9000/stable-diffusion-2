@@ -23,11 +23,24 @@ from ldm.models.diffusion.dpm_solver import DPMSolverSampler
 import GPUtil
 from threading import Thread
 import time
+import random
 
 torch.set_grad_enabled(False)
 
+# MAIN VARIABLES
 # directory of negative prompt
 neg_dir = "/scratch/jhh508/stable-diffusion-2/negPrompt.txt"
+# generate random seeds (5)
+seeds = []
+for i in range(5):
+    tempNum = random()%10000
+    seeds.append(tempNum)
+print(seeds)
+print("\n")
+# steps
+steps = [10, 20, 30, 50, 70]
+# guidance scales
+scales = [7.5, 20.0, 40.0]
 
 def chunk(it, size):
     it = iter(it)
@@ -277,11 +290,7 @@ def main(opt):
     batch_size = opt.n_samples
     n_rows = opt.n_rows if opt.n_rows > 0 else batch_size
 
-    sample_path = os.path.join(outpath, "web-diffusion-images_" + str(opt.seed) + "_" + str(opt.W))
-    print(sample_path)
-    os.makedirs(sample_path, exist_ok=True)
-    sample_count = 0
-    base_count = len(os.listdir(sample_path))
+    
 
     # keep seed and start code the same
     start_code = None
@@ -302,76 +311,86 @@ def main(opt):
         precision_scope("cuda"), \
         model.ema_scope():
 
-            counter = 0
-
-            for n in trange(opt.n_iter, desc="Sampling"):
-                    
-                # start monitor (GPU track)
-                # monitor = Monitor(0.1)
-                for prompts in tqdm(data, desc="data"):
-
-                    prompt_id = ids[counter]
-                    counter += 1
-
-                    # set ID path for image set
-                    id_path = os.path.join(sample_path, prompt_id)
-                    os.makedirs(id_path, exist_ok=True)
-
-                    uc = None
-                    if opt.scale != 1.0:
-                        uc = model.get_learned_conditioning(opt.neg_prompt)
-                    if isinstance(prompts, tuple):
-                        prompts = list(prompts)
-                    print("Prompts: " + prompts)
-                    c = model.get_learned_conditioning(prompts)
-                    shape = [opt.C, opt.H // opt.f, opt.W // opt.f]
-                    for a in range(5,10,2):
-                        g_scale = float(a)
-                    # increment steps, run sampler steps 30, 50, 70
-                        for i in range(30,71,20):
-                            steps = i
-                            print("step ",steps)
-                            # GPUtil.showUtilization()
-                            start_time = time.time()
-                            samples, _ = sampler.sample(S=steps,
-                                                        conditioning=c,
-                                                        batch_size=opt.n_samples,
-                                                        shape=shape,
-                                                        verbose=False,
-                                                        unconditional_guidance_scale=g_scale,
-                                                        unconditional_conditioning=uc,
-                                                        eta=opt.ddim_eta,
-                                                        x_T=start_code)
-
-                            x_samples = model.decode_first_stage(samples)
-                            x_samples = torch.clamp((x_samples + 1.0) / 2.0, min=0.0, max=1.0)
-                            time_taken = (time.time() - start_time)
-
-                            for x_sample in x_samples:
-                                x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
-                                img = Image.fromarray(x_sample.astype(np.uint8))
-                                img.save(os.path.join(id_path, f"{steps}.png"))
-                                base_count += 1
-                                sample_count += 1
-                            print("--- %s seconds ---" % (time.time() - start_time))
-
-                            # put time taken for generating file into log file
-                            writeFile = open(os.path.join(id_path, f"log.txt"), "a")
-                            if (steps == 30):
-                                writeFile.writelines("Prompt: " + prompts + " \n")
-                                writeFile.writelines("Steps, Time Taken \n")
-                            writeFile.writelines(str(steps) + "," + str(time_taken) + "\n")
-                            writeFile.close()
-                                
-                        # print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
-                        # totalLoad += monitor.loadSum
-                        # totalCount += monitor.timesCounted
-                        # monitor.stop()
+            # iterate through seeds
+            for seed in seeds:
                 
-                    # print("Total AVG Load: " + str(totalLoad/totalCount))
-            # monitor.stop()
+                # set sample folder path
+                sample_path = os.path.join(outpath, "web-diffusion-images_" + str(seed) + "_" + str(opt.W))
+                print(sample_path)
+                os.makedirs(sample_path, exist_ok=True)
+                sample_count = 0
+                base_count = len(os.listdir(sample_path))
 
-    print(f"Your samples are ready and waiting for you here: \n{outpath} \n")
+                # prompt counter
+                counter = 0
+
+                for n in trange(opt.n_iter, desc="Sampling"):
+                        
+                    # start monitor (GPU track)
+                    # monitor = Monitor(0.1)
+                    for prompts in tqdm(data, desc="data"):
+
+                        prompt_id = ids[counter]
+                        counter += 1
+
+                        # set ID path for image set
+                        id_path = os.path.join(sample_path, prompt_id)
+                        os.makedirs(id_path, exist_ok=True)
+
+                        uc = None
+                        if opt.scale != 1.0:
+                            uc = model.get_learned_conditioning(opt.neg_prompt)
+                        if isinstance(prompts, tuple):
+                            prompts = list(prompts)
+                        print("Prompts: " + prompts)
+                        c = model.get_learned_conditioning(prompts)
+                        shape = [opt.C, opt.H // opt.f, opt.W // opt.f]
+                        # iterate through guidance scales
+                        for g_scale in scales:
+                        # increment steps, run sampler steps 30, 50, 70
+                            for step in steps:
+                                print("step ",step)
+                                # GPUtil.showUtilization()
+                                start_time = time.time()
+                                samples, _ = sampler.sample(S=step,
+                                                            conditioning=c,
+                                                            batch_size=opt.n_samples,
+                                                            shape=shape,
+                                                            verbose=False,
+                                                            unconditional_guidance_scale=g_scale,
+                                                            unconditional_conditioning=uc,
+                                                            eta=opt.ddim_eta,
+                                                            x_T=start_code)
+
+                                x_samples = model.decode_first_stage(samples)
+                                x_samples = torch.clamp((x_samples + 1.0) / 2.0, min=0.0, max=1.0)
+                                time_taken = (time.time() - start_time)
+
+                                for x_sample in x_samples:
+                                    x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
+                                    img = Image.fromarray(x_sample.astype(np.uint8))
+                                    img.save(os.path.join(id_path, f"{steps}" + "_" + f"{g_scale}" + ".png"))
+                                    base_count += 1
+                                    sample_count += 1
+                                print("--- %s seconds ---" % (time.time() - start_time))
+
+                                # put time taken for generating file into log file
+                                writeFile = open(os.path.join(id_path, f"log.txt"), "a")
+                                if (steps == 30):
+                                    writeFile.writelines("Prompt: " + prompts + " \n")
+                                    writeFile.writelines("Steps, Time Taken \n")
+                                writeFile.writelines(str(steps) + "," + str(time_taken) + "\n")
+                                writeFile.close()
+                                
+                                # print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
+                                # totalLoad += monitor.loadSum
+                                # totalCount += monitor.timesCounted
+                                # monitor.stop()
+                
+                            # print("Total AVG Load: " + str(totalLoad/totalCount))
+                        # monitor.stop()
+
+    print(f"Finished, outputs in:\n{outpath} \n")
 
     # stop monitor
     # monitor.stop()
