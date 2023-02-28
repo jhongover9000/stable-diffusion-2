@@ -177,12 +177,13 @@ def parse_args():
     parser.add_argument(
         "--config",
         type=str,
-        default="configs/stable-diffusion/v2-inference.yaml",
+        default="configs/stable-diffusion/v2-inference-v.yaml",
         help="path to config which constructs model",
     )
     parser.add_argument(
         "--ckpt",
         type=str,
+        default="768-v-ema.ckpt",
         help="path to checkpoint of model",
     )
     parser.add_argument(
