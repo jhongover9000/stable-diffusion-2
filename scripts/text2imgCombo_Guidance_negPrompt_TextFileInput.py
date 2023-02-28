@@ -377,7 +377,7 @@ def main(opt):
 
                                 # put time taken for generating file into log file
                                 writeFile = open(os.path.join(id_path, f"log.txt"), "a")
-                                if (steps == 10):
+                                if (step == 10):
                                     writeFile.writelines("Prompt: " + prompts + " \n")
                                     writeFile.writelines("Guidance Scale: " + g_scale + " \n")
                                     writeFile.writelines("Steps, Time Taken \n")
