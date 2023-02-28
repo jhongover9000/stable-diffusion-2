@@ -368,17 +368,19 @@ def main(opt):
                                 for x_sample in x_samples:
                                     x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
                                     img = Image.fromarray(x_sample.astype(np.uint8))
-                                    img.save(os.path.join(id_path, f"{steps}" + "_" + f"{g_scale}" + ".png"))
+                                    img_name = f"{step}" + "_steps_" + f"{g_scale}" + "_scale.png"
+                                    img.save(os.path.join(id_path, img_name))
                                     base_count += 1
                                     sample_count += 1
                                 print("--- %s seconds ---" % (time.time() - start_time))
 
                                 # put time taken for generating file into log file
                                 writeFile = open(os.path.join(id_path, f"log.txt"), "a")
-                                if (steps == 30):
+                                if (steps == 10):
                                     writeFile.writelines("Prompt: " + prompts + " \n")
+                                    writeFile.writelines("Guidance Scale: " + g_scale + " \n")
                                     writeFile.writelines("Steps, Time Taken \n")
-                                writeFile.writelines(str(steps) + "," + str(time_taken) + "\n")
+                                writeFile.writelines(str(step) + "," + str(time_taken) + "\n")
                                 writeFile.close()
                                 
                                 # print("Top Usage: " + str(monitor.topUsage) + " AVG: " + str(monitor.loadSum/float(monitor.timesCounted)))
