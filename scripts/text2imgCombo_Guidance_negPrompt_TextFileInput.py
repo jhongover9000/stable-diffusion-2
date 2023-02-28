@@ -285,6 +285,8 @@ def main(opt):
         sampler = DDIMSampler(model)
 
     os.makedirs(opt.outdir, exist_ok=True)
+    if(not opt.negFile):
+       opt.outdir = "/scratch/jhh508/web-diffusion/"
     outpath = opt.outdir
 
     batch_size = opt.n_samples
