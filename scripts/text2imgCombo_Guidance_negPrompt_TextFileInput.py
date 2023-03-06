@@ -41,7 +41,7 @@ num_seeds = 5
 # steps
 steps = [10, 20, 30, 50, 70]
 # guidance scales
-scales = [7.5, 20.0, 40.0]
+scales = [7.5, 15.0, 20.0]
 
 def chunk(it, size):
     it = iter(it)
@@ -88,7 +88,7 @@ def parse_args():
         type=str,
         nargs="?",
         help="dir to write results to",
-        default="/scratch/jhh508/web-diffusion-neg/"
+        default="/scratch/jhh508/web-diffusion-neg-test/"
     )
     parser.add_argument(
         "--negFile",
