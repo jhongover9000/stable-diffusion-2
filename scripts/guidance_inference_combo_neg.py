@@ -88,7 +88,7 @@ def parse_args():
         type=str,
         nargs="?",
         help="dir to write results to",
-        default="/scratch/jhh508/web-diffusion-neg-test/"
+        default="/scratch/jhh508/web-diffusion-neg/"
     )
     parser.add_argument(
         "--negFile",
