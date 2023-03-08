@@ -174,6 +174,10 @@ def parse_args():
 
 
 def main(opt):
+    
+    if(opt.ckpt == "512-base-ema.ckpt"):
+        opt.outdir = "/scratch/jhh508/web-diffusion-base-neg/"
+
     seed_everything(opt.seed)
 
     config = OmegaConf.load(f"{opt.config}")
