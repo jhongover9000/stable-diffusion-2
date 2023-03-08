@@ -25,10 +25,9 @@ from threading import Thread
 import time
 import random
 
+# MAIN VARIABLES
 torch.set_grad_enabled(False)
 random.seed(None)
-
-# MAIN VARIABLES
 # directory of negative prompt
 neg_dir = "/scratch/jhh508/stable-diffusion-2/negPrompt.txt"
 # generate fixed random seeds (5)
