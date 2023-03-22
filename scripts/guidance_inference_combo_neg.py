@@ -272,8 +272,6 @@ def main(opt):
     # Text File Input
     file = open(opt.csv, "r")
 
-    seed_everything(opt.seed)
-
     config = OmegaConf.load(f"{opt.config}")
     model = load_model_from_config(config, f"{opt.ckpt}")
 
@@ -322,6 +320,10 @@ def main(opt):
 
                 # set seed each prompt (x seeds per prompt)
                 seed = random.randint(0,1000000)
+                opt.seed = seed
+
+                seed_everything(opt.seed)
+
                 
                 # set sample folder path
                 sample_path = os.path.join(outpath, "web-diffusion-images_" + str(seed) + "_" + str(opt.W))
