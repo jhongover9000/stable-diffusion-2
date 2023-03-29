@@ -292,14 +292,11 @@ def main(opt):
                     shape = [opt.C, opt.H // opt.f, opt.W // opt.f]
                     
                     # increment steps, run sampler 10 times
-                    for i in range(0,100,10):
+                    for i in range(1):
                         # Instantiate monitor with a 0.1-second delay between updates
                         # monitor = Monitor(0.01)
                         # set min step to 1
-                        if(i != 0):
-                            steps = i
-                        else:
-                            steps = 1
+                        steps = opt.steps
                         print("step ",steps)
                         # GPUtil.showUtilization()
                         start_time = time.time()
