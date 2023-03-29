@@ -321,6 +321,7 @@ def main(opt):
                 # set seed each prompt (x seeds per prompt)
                 seed = random.randint(0,1000000)
                 opt.seed = seed
+                # print("seed: " + str(seed))
 
                 seed_everything(opt.seed)
 

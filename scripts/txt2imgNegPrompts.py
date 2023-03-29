@@ -61,7 +61,7 @@ def parse_args():
         type=str,
         nargs="?",
         help="dir to write results to",
-        default="outputs/txt2img-samples"
+        default="/scratch/jhh508/stable-diffusion-2/outputs/txt2img-samples"
     )
     parser.add_argument(
         "--steps",
@@ -318,7 +318,7 @@ def main(opt):
 
                         for x_sample in x_samples:
                             x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
-                            img = Image.fromarray(x_sample.astype(np.uint8))
+                            img = Image.fromarray(x_sample.astype3(np.uint8))
                             # img = put_watermark(img, wm_encoder)
                             img.save(os.path.join(sample_path, f"{steps}.png"))
                             base_count += 1
