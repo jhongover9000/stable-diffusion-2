@@ -177,7 +177,7 @@ def parse_args():
         "--neg_prompt",
         type=str,
         nargs="?",
-        default = "extra limbs, deformed face, extra fingers",
+        default = "ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, extra limbs, disfigured, deformed, body out of frame, bad anatomy, watermark, signature, cut off, low contrast, underexposed, overexposed, bad art, beginner, amateur, distorted face",
         help = "the prompt to negate",
     )
     opt = parser.parse_args()
@@ -264,7 +264,7 @@ def main(opt):
             data = f.read().splitlines()
             data = [p for p in data for i in range(opt.repeat)]
             data = list(chunk(data, batch_size))
-    sample_path = os.path.join(outpath, opt.prompt[0:10].strip() + "_" + str(opt.W) + "_" + str(opt.H) + "_NegPrompt")
+    sample_path = os.path.join(outpath, opt.prompt.strip() + "_" + str(opt.W) + "_" + str(opt.H) + "_NegPrompt")
     os.makedirs(sample_path, exist_ok=True)
     sample_count = 0
     base_count = len(os.listdir(sample_path))
@@ -279,7 +279,7 @@ def main(opt):
         precision_scope("cuda"), \
         model.ema_scope():
             all_samples = list()
-
+# 
             # monitor = Monitor(0.1)
             for n in trange(opt.n_iter, desc="Sampling"):
                 for prompts in tqdm(data, desc="data"):
@@ -292,14 +292,11 @@ def main(opt):
                     shape = [opt.C, opt.H // opt.f, opt.W // opt.f]
                     
                     # increment steps, run sampler 10 times
-                    for i in range(0,100,10):
+                    for i in range(1):
                         # Instantiate monitor with a 0.1-second delay between updates
                         # monitor = Monitor(0.01)
                         # set min step to 1
-                        if(i != 0):
-                            steps = i
-                        else:
-                            steps = 1
+                        steps = opt.steps
                         print("step ",steps)
                         # GPUtil.showUtilization()
                         start_time = time.time()
