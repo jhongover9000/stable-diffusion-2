@@ -177,7 +177,7 @@ def parse_args():
         "--neg_prompt",
         type=str,
         nargs="?",
-        default = "extra limbs, deformed face, extra fingers",
+        default = "ugly, tiling, poorly drawn hands, poorly drawn feet, poorly drawn face, out of frame, extra limbs, disfigured, deformed, body out of frame, bad anatomy, watermark, signature, cut off, low contrast, underexposed, overexposed, bad art, beginner, amateur, distorted face",
         help = "the prompt to negate",
     )
     opt = parser.parse_args()
