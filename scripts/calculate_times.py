@@ -1,10 +1,11 @@
-# ex: python scripts/calculate_times.py /scratch/jhh508/ timecalc_neg 1 /scratch/jhh508/web-diffusion-neg/
+# ex: python scripts/calculate_times.py timecalc_neg 1 /scratch/jhh508/web-diffusion-neg/
 
 import argparse, os
 import sys, time
 import csv
 import subprocess
 
+# running directory
 mainDir = sys.argv[3]
 # 1 for new format, 0 for old
 dirType = sys.argv[2]
