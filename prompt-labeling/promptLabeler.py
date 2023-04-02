@@ -52,56 +52,51 @@ outFile = open("label_list_new.txt", "w")
 # testFlag = True
 print("Setup done, starting read.")
 
-def main():
-    
-    startLine = 0
-    labels = []
-    labelCount = 0
-    lineCount = 1
+startLine = 0
+labels = []
+labelCount = 0
+lineCount = 1
 
-    for prompt in readFile:
+for prompt in readFile:
 
-        lineCount+=1
-        if(lineCount < startLine):
-            labelCount+=1
+    lineCount+=1
+    if(lineCount < startLine):
+        labelCount+=1
+        continue
+
+    # print(prompt)
+
+    # if(testFlag):
+    #     # in case something doesnt work
+    #     testVar = input("Check: ")
+    #     # if things are OK, proceed unsupervised
+    #     if (testVar == "OK"):
+    #         testFlag = False
+
+    promptFull = promptStarter + prompt
+
+    # in case the engine is overloaded
+    delay = 1
+    for n in range(15):
+        try:
+            completion = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "user", "content": promptFull}
+                ]
+            )
+        except:
+            # increment each time error occurs
+            time.sleep(delay)
+            delay *= 2
             continue
+        break
+        
+    label = completion.choices[0].message.content
+    print(label.lower().strip("."))
+    labels.append(label.lower().strip("."))
+    labelCount += 1
+    print(labelCount)
+    outFile.write(label.lower().strip(".") + "\n")
 
-        # print(prompt)
-
-        # if(testFlag):
-        #     # in case something doesnt work
-        #     testVar = input("Check: ")
-        #     # if things are OK, proceed unsupervised
-        #     if (testVar == "OK"):
-        #         testFlag = False
-
-        promptFull = promptStarter + prompt
-
-        # in case the engine is overloaded
-        delay = 1
-        for n in range(15):
-            try:
-                completion = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
-                    messages=[
-                        {"role": "user", "content": promptFull}
-                    ]
-                )
-            except:
-                # increment each time error occurs
-                time.sleep(delay)
-                delay *= 2
-                continue
-            break
-            
-        label = completion.choices[0].message.content
-        print(label.lower().strip("."))
-        labels.append(label.lower().strip("."))
-        labelCount += 1
-        print(labelCount)
-        outFile.write(label.lower().strip(".") + "\n")
-
-        #check 484 for double label, + 171
-
-if __name__ == "__main__":
-    main()
+    #check 484 for double label, + 171
