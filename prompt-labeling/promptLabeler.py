@@ -4,7 +4,7 @@ import argparse
 import sys
 import time
 import csv
-openai.api_key = os.getenv("OPENAI_API_KEY=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")
+openai.api_key = os.getenv("OPENAI_API_KEY=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")
 
 readFile = open(sys.argv[1],"r")
 
@@ -45,7 +45,7 @@ readFile = open(sys.argv[1],"r")
 
 # GET LABELS
 promptStarter = "Label the prompt as one among the following: food, landscape, object, animal, celebrity, person/people, sports, text. Do not use any other words. Prompt: "
-openai.api_key = "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"
+openai.api_key = "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"
 # ended at 483 + 171
 
 outFile = open("label_list_new.txt", "w")
