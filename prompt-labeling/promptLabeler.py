@@ -52,7 +52,7 @@ lineCount = 0
 # ended at 483 + 171
 startLine = 0
 outFile = open("label_list_new.txt", "a")
-testFlag = True
+# testFlag = True
 for prompt in readFile:
 
     lineCount+=1
@@ -62,12 +62,12 @@ for prompt in readFile:
 
     # print(prompt)
 
-    if(testFlag):
-        # in case something doesnt work
-        testVar = input("Check: ")
-        # if things are OK, proceed unsupervised
-        if (testVar == "OK"):
-            testFlag = False
+    # if(testFlag):
+    #     # in case something doesnt work
+    #     testVar = input("Check: ")
+    #     # if things are OK, proceed unsupervised
+    #     if (testVar == "OK"):
+    #         testFlag = False
 
     promptFull = promptStarter + prompt
 
