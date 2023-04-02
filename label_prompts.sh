@@ -6,7 +6,7 @@
 #SBATCH --mem=40G
 #SBATCH --cpus-per-task=4
 # Walltime format hh:mm:ss
-#SBATCH --time=180:00:00
+#SBATCH --time=72:00:00
 # Output and error files
 #SBATCH -o job.%J.out
 #SBATCH -e job.%J.err
