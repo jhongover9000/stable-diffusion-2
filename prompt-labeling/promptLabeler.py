@@ -99,4 +99,5 @@ for prompt in readFile:
     print(labelCount)
     outFile.write(label.lower().strip(".") + "\n")
 
+outFile.close()
     #check 484 for double label, + 171
