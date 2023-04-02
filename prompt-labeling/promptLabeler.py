@@ -46,16 +46,19 @@ readFile = open(sys.argv[1],"r")
 # GET LABELS
 promptStarter = "Label the prompt as one among the following: food, landscape, object, animal, celebrity, person/people, sports, text. Do not use any other words. Prompt: "
 openai.api_key = "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"
-labels = []
-labelCount = 0
-lineCount = 1
 # ended at 483 + 171
-startLine = 0
+
 outFile = open("label_list_new.txt", "w")
 # testFlag = True
 print("Setup done, starting read.")
 
 def main():
+    
+    startLine = 0
+    labels = []
+    labelCount = 0
+    lineCount = 1
+
     for prompt in readFile:
 
         lineCount+=1
