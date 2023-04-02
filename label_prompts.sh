@@ -1,6 +1,7 @@
 #!/bin/bash -l
 # Set number of tasks to run
-#SBATCH -p compute
+#SBATCH -p nvidia
+#SBATCH --gres=gpu:a100:1
 #SBATCH -n 2
 # Set the number of CPU cores for each task
 #SBATCH --mem=40G

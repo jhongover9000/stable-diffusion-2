@@ -48,51 +48,57 @@ promptStarter = "Label the prompt as one among the following: food, landscape, o
 openai.api_key = "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"
 labels = []
 labelCount = 0
-lineCount = 0
+lineCount = 1
 # ended at 483 + 171
 startLine = 0
-outFile = open("label_list_new.txt", "a")
+outFile = open("label_list_new.txt", "w")
 # testFlag = True
-for prompt in readFile:
+print("Setup done, starting read.")
 
-    lineCount+=1
-    if(lineCount < startLine):
-        labelCount+=1
-        continue
+def main():
+    for prompt in readFile:
 
-    # print(prompt)
-
-    # if(testFlag):
-    #     # in case something doesnt work
-    #     testVar = input("Check: ")
-    #     # if things are OK, proceed unsupervised
-    #     if (testVar == "OK"):
-    #         testFlag = False
-
-    promptFull = promptStarter + prompt
-
-    # in case the engine is overloaded
-    delay = 1
-    for n in range(15):
-        try:
-            completion = openai.ChatCompletion.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {"role": "user", "content": promptFull}
-                ]
-            )
-        except:
-            # increment each time error occurs
-            time.sleep(delay)
-            delay *= 2
+        lineCount+=1
+        if(lineCount < startLine):
+            labelCount+=1
             continue
-        break
-        
-    label = completion.choices[0].message.content
-    print(label.lower().strip("."))
-    labels.append(label.lower().strip("."))
-    labelCount += 1
-    print(labelCount)
-    outFile.write(label.lower().strip(".") + "\n")
 
-    #check 484 for double label, + 171
+        # print(prompt)
+
+        # if(testFlag):
+        #     # in case something doesnt work
+        #     testVar = input("Check: ")
+        #     # if things are OK, proceed unsupervised
+        #     if (testVar == "OK"):
+        #         testFlag = False
+
+        promptFull = promptStarter + prompt
+
+        # in case the engine is overloaded
+        delay = 1
+        for n in range(15):
+            try:
+                completion = openai.ChatCompletion.create(
+                    model="gpt-3.5-turbo",
+                    messages=[
+                        {"role": "user", "content": promptFull}
+                    ]
+                )
+            except:
+                # increment each time error occurs
+                time.sleep(delay)
+                delay *= 2
+                continue
+            break
+            
+        label = completion.choices[0].message.content
+        print(label.lower().strip("."))
+        labels.append(label.lower().strip("."))
+        labelCount += 1
+        print(labelCount)
+        outFile.write(label.lower().strip(".") + "\n")
+
+        #check 484 for double label, + 171
+
+if __name__ == "__main__":
+    main()
