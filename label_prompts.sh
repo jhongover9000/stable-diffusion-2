@@ -30,4 +30,4 @@ conda activate stable-diff
 
 module load gcc
 
-python prompt_labeling/promptLabeler prompt_labeling/promptList.txt
+python prompt_labeling/promptLabeler.py prompt_labeling/promptList.txt
