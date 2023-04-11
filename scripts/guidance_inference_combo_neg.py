@@ -385,10 +385,10 @@ def main(opt):
                                                             unconditional_conditioning=uc,
                                                             eta=opt.ddim_eta,
                                                             x_T=start_code)
-
+                                time_taken = (time.time() - start_time)
                                 x_samples = model.decode_first_stage(samples)
                                 x_samples = torch.clamp((x_samples + 1.0) / 2.0, min=0.0, max=1.0)
-                                time_taken = (time.time() - start_time)
+                                
 
                                 for x_sample in x_samples:
                                     x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
@@ -402,7 +402,7 @@ def main(opt):
 
                                 # put time taken for generating file into log file
                                 # writeFile = open(os.path.join(id_path, f"{prompt_id}" + f"log.txt"), "a")
-                                writeFile = open(os.path.join(outpath, f"{prompt_id}" + f"log.txt"), "a")
+                                writeFile = open(os.path.join(outpath, f"{prompt_id}" + f"_log.txt"), "a")
                                 if (step == 10):
                                     writeFile.writelines("Prompt: " + prompts + " \n")
                                     writeFile.writelines("Guidance Scale: " + str(g_scale) + " \n")
