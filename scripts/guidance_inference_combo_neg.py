@@ -38,7 +38,7 @@ neg_dir = "/scratch/jhh508/stable-diffusion-2/negPrompt.txt"
 #     tempNum = random.randint(0,1000000)
 #     seeds.append(tempNum)
 # generate random seeds every time
-num_seeds = 5
+num_seeds = 1
 # steps
 steps = [10, 20, 30, 50]
 # guidance scales
@@ -354,8 +354,8 @@ def main(opt):
                         counter += 1
 
                         # set ID path for image set
-                        id_path = os.path.join(sample_path, prompt_id)
-                        os.makedirs(id_path, exist_ok=True)
+                        # id_path = os.path.join(sample_path, prompt_id)
+                        # os.makedirs(id_path, exist_ok=True)
 
                         uc = None
                         if opt.scale != 1.0:
@@ -390,14 +390,16 @@ def main(opt):
                                 for x_sample in x_samples:
                                     x_sample = 255. * rearrange(x_sample.cpu().numpy(), 'c h w -> h w c')
                                     img = Image.fromarray(x_sample.astype(np.uint8))
-                                    img_name = f"{step}" + "_steps_" + f"{g_scale}" + "_scale.png"
-                                    img.save(os.path.join(id_path, img_name))
+                                    img_name = f"{prompt_id}" + "_" + f"{step}" + "_" + f"{g_scale}" + ".jpg"
+                                    img.save(os.path.join(outpath, img_name))
+                                    # img.save(os.path.join(id_path, img_name))
                                     base_count += 1
                                     sample_count += 1
                                 print("--- %s seconds ---" % (time.time() - start_time))
 
                                 # put time taken for generating file into log file
-                                writeFile = open(os.path.join(id_path, f"log.txt"), "a")
+                                # writeFile = open(os.path.join(id_path, f"{prompt_id}" + f"log.txt"), "a")
+                                writeFile = open(os.path.join(outpath, f"{prompt_id}" + f"log.txt"), "a")
                                 if (step == 10):
                                     writeFile.writelines("Prompt: " + prompts + " \n")
                                     writeFile.writelines("Guidance Scale: " + str(g_scale) + " \n")

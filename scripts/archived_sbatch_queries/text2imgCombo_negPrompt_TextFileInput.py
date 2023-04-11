@@ -258,7 +258,7 @@ def main(opt):
     # Text File Input
     file = open(opt.csv, "r")
 
-    # seed_everything(opt.seed)
+    seed_everything(opt.seed)
 
     config = OmegaConf.load(f"{opt.config}")
     model = load_model_from_config(config, f"{opt.ckpt}")

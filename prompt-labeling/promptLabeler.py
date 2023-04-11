@@ -1,10 +1,9 @@
 import os
 import openai
-import argparse
+import argparse   
 import sys
 import time
 import csv
-openai.api_key = os.getenv("OPENAI_API_KEY=key")
 
 readFile = open(sys.argv[1],"r")
 
