@@ -31,4 +31,4 @@ conda activate stable-diff
 
 module load gcc
 
-python prompt-labeling/promptLabeler.py prompt-labeling/promptList.txt
+python prompt-labeling/promptLabeler.py prompt-labeling/promptList_webdiff.txt
