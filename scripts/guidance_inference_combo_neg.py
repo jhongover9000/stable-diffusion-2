@@ -15,6 +15,9 @@ from torchvision.utils import make_grid
 from pytorch_lightning import seed_everything
 from torch import autocast
 from contextlib import nullcontext
+
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
 from ldm.util import instantiate_from_config
 from ldm.models.diffusion.ddim import DDIMSampler
 from ldm.models.diffusion.plms import PLMSSampler
