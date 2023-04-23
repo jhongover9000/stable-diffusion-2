@@ -33,4 +33,4 @@ module load gcc
 
 cd prompt-labeling/
 
-python promptLabeler.py promptList_full.txt labelList_full.txt
+python promptLabeler.py promptList_full.txt labelList_full_v2.txt
