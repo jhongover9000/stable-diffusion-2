@@ -21,7 +21,7 @@ module purge
 
 pwd
 
-cd /scratch/jhh508/stable-diffusion-2/
+cd /scratch/jhh508/stable-diffusion-2/prompt-labeling/
 
 eval "$(conda shell.bash hook)"
 
@@ -29,8 +29,6 @@ conda init bash
 
 conda activate stable-diff
 
-module load gcc
-
-cd prompt-labeling/
+module load gcc 
 
 python promptLabeler.py promptList_full.txt labelList_full_v2.txt
