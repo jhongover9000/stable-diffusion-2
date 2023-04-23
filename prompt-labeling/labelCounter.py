@@ -18,7 +18,7 @@ setLabels = set(labels)
 c = Counter(labels)
 
 print(c)
-outFile.write(c)
+outFile.write(str(c))
 
 
 
