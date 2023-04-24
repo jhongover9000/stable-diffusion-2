@@ -33,4 +33,6 @@ module load gcc
 
 echo loaded
 
-python3 promptLabeler.py promptList_full.txt labelList_full_v2.txt
+chmod +x promptLabeler.py
+
+python promptLabeler.py promptList_full.txt labelList_full_v2.txt
