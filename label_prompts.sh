@@ -29,6 +29,8 @@ conda init bash
 
 conda activate stable-diff
 
-module load gcc 
+module load gcc
+
+echo loaded
 
 python promptLabeler.py promptList_full.txt labelList_full_v2.txt
