@@ -2,7 +2,7 @@
 # Set number of tasks to run
 #SBATCH -p nvidia
 #SBATCH --gres=gpu:a100:1
-#SBATCH -n 2
+#SBATCH -n 5
 # Set the number of CPU cores for each task
 #SBATCH --mem=40G
 #SBATCH --cpus-per-task=4
@@ -19,11 +19,9 @@ FILES=(/scratch/jhh508/stable-diffusion-2/*)
 
 module purge
 
-pwd
-
 cd /scratch/jhh508/stable-diffusion-2/prompt-labeling/
 
-eval "$(conda shell.bash hook)"
+pwd
 
 conda init bash
 
@@ -32,7 +30,5 @@ conda activate stable-diff
 module load gcc
 
 echo loaded
-
-echo $PATH
 
 python3 promptLabeler.py promptList_full.txt labelList_full_v2.txt
