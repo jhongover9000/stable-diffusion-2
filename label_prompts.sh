@@ -23,6 +23,8 @@ cd /scratch/jhh508/stable-diffusion-2/prompt-labeling/
 
 pwd
 
+eval "$(conda shell.bash hook)"
+
 conda init bash
 
 conda activate stable-diff
